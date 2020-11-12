@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1207efa91d62405a8443119990be0ea4" Name="Diagram1">
+        <EntityTypeShape EntityType="SightOfOneCityModel.Author" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SightOfOneCityModel.AuthorOfSight" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SightOfOneCityModel.Category" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SightOfOneCityModel.KindOfTransport" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SightOfOneCityModel.Sight" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SightOfOneCityModel.StatusSight" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="SightOfOneCityModel.Transport" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="SightOfOneCityModel.TransportStop" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SightOfOneCityModel.TransportToSight" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SightOfOneCityModel.WorkDays" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SightOfOneCityModel.View_Full" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <AssociationConnector Association="SightOfOneCityModel.FK__AuthorOfS__Autho__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="SightOfOneCityModel.FK__AuthorOfS__Sight__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="SightOfOneCityModel.FK__Sight__CategoryI__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="SightOfOneCityModel.FK__Transport__KindI__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="SightOfOneCityModel.FK__Sight__StatusID__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="SightOfOneCityModel.FK__Sight__StopID__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="SightOfOneCityModel.FK__Transport__Sight__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="SightOfOneCityModel.FK__WorkDays__SightI__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="SightOfOneCityModel.FK__Transport__Trans__4D94879B" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

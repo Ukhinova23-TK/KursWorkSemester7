@@ -1,0 +1,692 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище SightOfOneCityModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FamilyAuthor" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="NameAuthor" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="PatronymicAuthor" Type="nvarchar" MaxLength="150" />
+          <Property Name="Gender" Type="bit" Nullable="false" />
+          <Property Name="DateBirthday" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuthorOfSight">
+          <Key>
+            <PropertyRef Name="SightID" />
+            <PropertyRef Name="AuthorID" />
+          </Key>
+          <Property Name="SightID" Type="bigint" Nullable="false" />
+          <Property Name="AuthorID" Type="bigint" Nullable="false" />
+          <Property Name="DateCreate" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameCategory" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="KindOfTransport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameKind" Type="nvarchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sight">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameSight" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DescriptionSight" Type="text" />
+          <Property Name="Photo" Type="nvarchar" MaxLength="300" />
+          <Property Name="AddresSights" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="StopID" Type="tinyint" Nullable="false" />
+          <Property Name="StatusID" Type="tinyint" Nullable="false" />
+          <Property Name="CategoryID" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusSight">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStatus" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Transport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RouteNumber" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="KindID" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TransportStop">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStop" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TransportToSight">
+          <Key>
+            <PropertyRef Name="SightID" />
+            <PropertyRef Name="TransportID" />
+          </Key>
+          <Property Name="SightID" Type="bigint" Nullable="false" />
+          <Property Name="TransportID" Type="bigint" Nullable="false" />
+          <Property Name="Final" Type="bit" Nullable="false" />
+          <Property Name="Special" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkDays">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameDayOfWeek" Type="tinyint" Nullable="false" />
+          <Property Name="SightID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "SightOfOneCity.dbo.View_Full" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="View_Full">
+          <Key>
+            <PropertyRef Name="NameSight" />
+            <PropertyRef Name="FamilyAuthor" />
+            <PropertyRef Name="NameAuthor" />
+          </Key>
+          <Property Name="NameSight" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="NameCategory" Type="nvarchar" MaxLength="100" />
+          <Property Name="NameStatus" Type="nvarchar" MaxLength="100" />
+          <Property Name="FamilyAuthor" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="NameAuthor" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="PatronymicAuthor" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <Association Name="FK__AuthorOfS__Autho__5165187F">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="AuthorOfSight" Type="Self.AuthorOfSight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AuthorOfSight">
+              <PropertyRef Name="AuthorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AuthorOfS__Sight__5070F446">
+          <End Role="Sight" Type="Self.Sight" Multiplicity="1" />
+          <End Role="AuthorOfSight" Type="Self.AuthorOfSight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sight">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AuthorOfSight">
+              <PropertyRef Name="SightID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sight__CategoryI__46E78A0C">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Sight" Type="Self.Sight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sight">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sight__StatusID__45F365D3">
+          <End Role="StatusSight" Type="Self.StatusSight" Multiplicity="1" />
+          <End Role="Sight" Type="Self.Sight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusSight">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sight">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sight__StopID__44FF419A">
+          <End Role="TransportStop" Type="Self.TransportStop" Multiplicity="1" />
+          <End Role="Sight" Type="Self.Sight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportStop">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sight">
+              <PropertyRef Name="StopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transport__KindI__49C3F6B7">
+          <End Role="KindOfTransport" Type="Self.KindOfTransport" Multiplicity="1" />
+          <End Role="Transport" Type="Self.Transport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KindOfTransport">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transport">
+              <PropertyRef Name="KindID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transport__Sight__4CA06362">
+          <End Role="Sight" Type="Self.Sight" Multiplicity="1" />
+          <End Role="TransportToSight" Type="Self.TransportToSight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sight">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportToSight">
+              <PropertyRef Name="SightID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transport__Trans__4D94879B">
+          <End Role="Transport" Type="Self.Transport" Multiplicity="1" />
+          <End Role="TransportToSight" Type="Self.TransportToSight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transport">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportToSight">
+              <PropertyRef Name="TransportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorkDays__SightI__5535A963">
+          <End Role="Sight" Type="Self.Sight" Multiplicity="1" />
+          <End Role="WorkDays" Type="Self.WorkDays" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sight">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkDays">
+              <PropertyRef Name="SightID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SightOfOneCityModelContainer">
+          <EntitySet Name="Author" EntityType="Self.Author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthorOfSight" EntityType="Self.AuthorOfSight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KindOfTransport" EntityType="Self.KindOfTransport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sight" EntityType="Self.Sight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusSight" EntityType="Self.StatusSight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transport" EntityType="Self.Transport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransportStop" EntityType="Self.TransportStop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransportToSight" EntityType="Self.TransportToSight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkDays" EntityType="Self.WorkDays" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_Full" EntityType="Self.View_Full" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Full].[NameSight] AS [NameSight], 
+    [View_Full].[NameCategory] AS [NameCategory], 
+    [View_Full].[NameStatus] AS [NameStatus], 
+    [View_Full].[FamilyAuthor] AS [FamilyAuthor], 
+    [View_Full].[NameAuthor] AS [NameAuthor], 
+    [View_Full].[PatronymicAuthor] AS [PatronymicAuthor]
+    FROM [dbo].[View_Full] AS [View_Full]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__AuthorOfS__Autho__5165187F" Association="Self.FK__AuthorOfS__Autho__5165187F">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="AuthorOfSight" EntitySet="AuthorOfSight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AuthorOfS__Sight__5070F446" Association="Self.FK__AuthorOfS__Sight__5070F446">
+            <End Role="Sight" EntitySet="Sight" />
+            <End Role="AuthorOfSight" EntitySet="AuthorOfSight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sight__CategoryI__46E78A0C" Association="Self.FK__Sight__CategoryI__46E78A0C">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Sight" EntitySet="Sight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sight__StatusID__45F365D3" Association="Self.FK__Sight__StatusID__45F365D3">
+            <End Role="StatusSight" EntitySet="StatusSight" />
+            <End Role="Sight" EntitySet="Sight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sight__StopID__44FF419A" Association="Self.FK__Sight__StopID__44FF419A">
+            <End Role="TransportStop" EntitySet="TransportStop" />
+            <End Role="Sight" EntitySet="Sight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transport__KindI__49C3F6B7" Association="Self.FK__Transport__KindI__49C3F6B7">
+            <End Role="KindOfTransport" EntitySet="KindOfTransport" />
+            <End Role="Transport" EntitySet="Transport" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transport__Sight__4CA06362" Association="Self.FK__Transport__Sight__4CA06362">
+            <End Role="Sight" EntitySet="Sight" />
+            <End Role="TransportToSight" EntitySet="TransportToSight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transport__Trans__4D94879B" Association="Self.FK__Transport__Trans__4D94879B">
+            <End Role="Transport" EntitySet="Transport" />
+            <End Role="TransportToSight" EntitySet="TransportToSight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorkDays__SightI__5535A963" Association="Self.FK__WorkDays__SightI__5535A963">
+            <End Role="Sight" EntitySet="Sight" />
+            <End Role="WorkDays" EntitySet="WorkDays" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SightOfOneCityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Author">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FamilyAuthor" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NameAuthor" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PatronymicAuthor" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Boolean" Nullable="false" />
+          <Property Name="DateBirthday" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="AuthorOfSight" Relationship="Self.FK__AuthorOfS__Autho__5165187F" FromRole="Author" ToRole="AuthorOfSight" />
+        </EntityType>
+        <EntityType Name="AuthorOfSight">
+          <Key>
+            <PropertyRef Name="SightID" />
+            <PropertyRef Name="AuthorID" />
+          </Key>
+          <Property Name="SightID" Type="Int64" Nullable="false" />
+          <Property Name="AuthorID" Type="Int64" Nullable="false" />
+          <Property Name="DateCreate" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Author" Relationship="Self.FK__AuthorOfS__Autho__5165187F" FromRole="AuthorOfSight" ToRole="Author" />
+          <NavigationProperty Name="Sight" Relationship="Self.FK__AuthorOfS__Sight__5070F446" FromRole="AuthorOfSight" ToRole="Sight" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameCategory" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sight" Relationship="Self.FK__Sight__CategoryI__46E78A0C" FromRole="Category" ToRole="Sight" />
+        </EntityType>
+        <EntityType Name="KindOfTransport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameKind" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Transport" Relationship="Self.FK__Transport__KindI__49C3F6B7" FromRole="KindOfTransport" ToRole="Transport" />
+        </EntityType>
+        <EntityType Name="Sight">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameSight" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DescriptionSight" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Photo" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="AddresSights" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StopID" Type="Byte" Nullable="false" />
+          <Property Name="StatusID" Type="Byte" Nullable="false" />
+          <Property Name="CategoryID" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="AuthorOfSight" Relationship="Self.FK__AuthorOfS__Sight__5070F446" FromRole="Sight" ToRole="AuthorOfSight" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Sight__CategoryI__46E78A0C" FromRole="Sight" ToRole="Category" />
+          <NavigationProperty Name="StatusSight" Relationship="Self.FK__Sight__StatusID__45F365D3" FromRole="Sight" ToRole="StatusSight" />
+          <NavigationProperty Name="TransportStop" Relationship="Self.FK__Sight__StopID__44FF419A" FromRole="Sight" ToRole="TransportStop" />
+          <NavigationProperty Name="TransportToSight" Relationship="Self.FK__Transport__Sight__4CA06362" FromRole="Sight" ToRole="TransportToSight" />
+          <NavigationProperty Name="WorkDays" Relationship="Self.FK__WorkDays__SightI__5535A963" FromRole="Sight" ToRole="WorkDays" />
+        </EntityType>
+        <EntityType Name="StatusSight">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sight" Relationship="Self.FK__Sight__StatusID__45F365D3" FromRole="StatusSight" ToRole="Sight" />
+        </EntityType>
+        <EntityType Name="Transport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RouteNumber" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KindID" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="KindOfTransport" Relationship="Self.FK__Transport__KindI__49C3F6B7" FromRole="Transport" ToRole="KindOfTransport" />
+          <NavigationProperty Name="TransportToSight" Relationship="Self.FK__Transport__Trans__4D94879B" FromRole="Transport" ToRole="TransportToSight" />
+        </EntityType>
+        <EntityType Name="TransportStop">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStop" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sight" Relationship="Self.FK__Sight__StopID__44FF419A" FromRole="TransportStop" ToRole="Sight" />
+        </EntityType>
+        <EntityType Name="TransportToSight">
+          <Key>
+            <PropertyRef Name="SightID" />
+            <PropertyRef Name="TransportID" />
+          </Key>
+          <Property Name="SightID" Type="Int64" Nullable="false" />
+          <Property Name="TransportID" Type="Int64" Nullable="false" />
+          <Property Name="Final" Type="Boolean" Nullable="false" />
+          <Property Name="Special" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Sight" Relationship="Self.FK__Transport__Sight__4CA06362" FromRole="TransportToSight" ToRole="Sight" />
+          <NavigationProperty Name="Transport" Relationship="Self.FK__Transport__Trans__4D94879B" FromRole="TransportToSight" ToRole="Transport" />
+        </EntityType>
+        <EntityType Name="WorkDays">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameDayOfWeek" Type="Byte" Nullable="false" />
+          <Property Name="SightID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Sight" Relationship="Self.FK__WorkDays__SightI__5535A963" FromRole="WorkDays" ToRole="Sight" />
+        </EntityType>
+        <EntityType Name="View_Full">
+          <Key>
+            <PropertyRef Name="NameSight" />
+            <PropertyRef Name="FamilyAuthor" />
+            <PropertyRef Name="NameAuthor" />
+          </Key>
+          <Property Name="NameSight" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NameCategory" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FamilyAuthor" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NameAuthor" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PatronymicAuthor" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__AuthorOfS__Autho__5165187F">
+          <End Role="Author" Type="Self.Author" Multiplicity="1" />
+          <End Role="AuthorOfSight" Type="Self.AuthorOfSight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Author">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AuthorOfSight">
+              <PropertyRef Name="AuthorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AuthorOfS__Sight__5070F446">
+          <End Role="Sight" Type="Self.Sight" Multiplicity="1" />
+          <End Role="AuthorOfSight" Type="Self.AuthorOfSight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sight">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AuthorOfSight">
+              <PropertyRef Name="SightID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sight__CategoryI__46E78A0C">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Sight" Type="Self.Sight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sight">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transport__KindI__49C3F6B7">
+          <End Role="KindOfTransport" Type="Self.KindOfTransport" Multiplicity="1" />
+          <End Role="Transport" Type="Self.Transport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KindOfTransport">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Transport">
+              <PropertyRef Name="KindID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sight__StatusID__45F365D3">
+          <End Role="StatusSight" Type="Self.StatusSight" Multiplicity="1" />
+          <End Role="Sight" Type="Self.Sight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusSight">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sight">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sight__StopID__44FF419A">
+          <End Role="TransportStop" Type="Self.TransportStop" Multiplicity="1" />
+          <End Role="Sight" Type="Self.Sight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportStop">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sight">
+              <PropertyRef Name="StopID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transport__Sight__4CA06362">
+          <End Role="Sight" Type="Self.Sight" Multiplicity="1" />
+          <End Role="TransportToSight" Type="Self.TransportToSight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sight">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportToSight">
+              <PropertyRef Name="SightID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WorkDays__SightI__5535A963">
+          <End Role="Sight" Type="Self.Sight" Multiplicity="1" />
+          <End Role="WorkDays" Type="Self.WorkDays" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sight">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkDays">
+              <PropertyRef Name="SightID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transport__Trans__4D94879B">
+          <End Role="Transport" Type="Self.Transport" Multiplicity="1" />
+          <End Role="TransportToSight" Type="Self.TransportToSight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transport">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportToSight">
+              <PropertyRef Name="TransportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SightOfOneCityEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Author" EntityType="Self.Author" />
+          <EntitySet Name="AuthorOfSight" EntityType="Self.AuthorOfSight" />
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="KindOfTransport" EntityType="Self.KindOfTransport" />
+          <EntitySet Name="Sight" EntityType="Self.Sight" />
+          <EntitySet Name="StatusSight" EntityType="Self.StatusSight" />
+          <EntitySet Name="Transport" EntityType="Self.Transport" />
+          <EntitySet Name="TransportStop" EntityType="Self.TransportStop" />
+          <EntitySet Name="TransportToSight" EntityType="Self.TransportToSight" />
+          <EntitySet Name="WorkDays" EntityType="Self.WorkDays" />
+          <EntitySet Name="View_Full" EntityType="Self.View_Full" />
+          <AssociationSet Name="FK__AuthorOfS__Autho__5165187F" Association="Self.FK__AuthorOfS__Autho__5165187F">
+            <End Role="Author" EntitySet="Author" />
+            <End Role="AuthorOfSight" EntitySet="AuthorOfSight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AuthorOfS__Sight__5070F446" Association="Self.FK__AuthorOfS__Sight__5070F446">
+            <End Role="Sight" EntitySet="Sight" />
+            <End Role="AuthorOfSight" EntitySet="AuthorOfSight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sight__CategoryI__46E78A0C" Association="Self.FK__Sight__CategoryI__46E78A0C">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Sight" EntitySet="Sight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transport__KindI__49C3F6B7" Association="Self.FK__Transport__KindI__49C3F6B7">
+            <End Role="KindOfTransport" EntitySet="KindOfTransport" />
+            <End Role="Transport" EntitySet="Transport" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sight__StatusID__45F365D3" Association="Self.FK__Sight__StatusID__45F365D3">
+            <End Role="StatusSight" EntitySet="StatusSight" />
+            <End Role="Sight" EntitySet="Sight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sight__StopID__44FF419A" Association="Self.FK__Sight__StopID__44FF419A">
+            <End Role="TransportStop" EntitySet="TransportStop" />
+            <End Role="Sight" EntitySet="Sight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transport__Sight__4CA06362" Association="Self.FK__Transport__Sight__4CA06362">
+            <End Role="Sight" EntitySet="Sight" />
+            <End Role="TransportToSight" EntitySet="TransportToSight" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WorkDays__SightI__5535A963" Association="Self.FK__WorkDays__SightI__5535A963">
+            <End Role="Sight" EntitySet="Sight" />
+            <End Role="WorkDays" EntitySet="WorkDays" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transport__Trans__4D94879B" Association="Self.FK__Transport__Trans__4D94879B">
+            <End Role="Transport" EntitySet="Transport" />
+            <End Role="TransportToSight" EntitySet="TransportToSight" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SightOfOneCityModelContainer" CdmEntityContainer="SightOfOneCityEntities">
+          <EntitySetMapping Name="Author">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.Author">
+              <MappingFragment StoreEntitySet="Author">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FamilyAuthor" ColumnName="FamilyAuthor" />
+                <ScalarProperty Name="NameAuthor" ColumnName="NameAuthor" />
+                <ScalarProperty Name="PatronymicAuthor" ColumnName="PatronymicAuthor" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateBirthday" ColumnName="DateBirthday" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthorOfSight">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.AuthorOfSight">
+              <MappingFragment StoreEntitySet="AuthorOfSight">
+                <ScalarProperty Name="SightID" ColumnName="SightID" />
+                <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+                <ScalarProperty Name="DateCreate" ColumnName="DateCreate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameCategory" ColumnName="NameCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KindOfTransport">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.KindOfTransport">
+              <MappingFragment StoreEntitySet="KindOfTransport">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameKind" ColumnName="NameKind" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sight">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.Sight">
+              <MappingFragment StoreEntitySet="Sight">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameSight" ColumnName="NameSight" />
+                <ScalarProperty Name="DescriptionSight" ColumnName="DescriptionSight" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="AddresSights" ColumnName="AddresSights" />
+                <ScalarProperty Name="StopID" ColumnName="StopID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusSight">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.StatusSight">
+              <MappingFragment StoreEntitySet="StatusSight">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transport">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.Transport">
+              <MappingFragment StoreEntitySet="Transport">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RouteNumber" ColumnName="RouteNumber" />
+                <ScalarProperty Name="KindID" ColumnName="KindID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransportStop">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.TransportStop">
+              <MappingFragment StoreEntitySet="TransportStop">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameStop" ColumnName="NameStop" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransportToSight">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.TransportToSight">
+              <MappingFragment StoreEntitySet="TransportToSight">
+                <ScalarProperty Name="SightID" ColumnName="SightID" />
+                <ScalarProperty Name="TransportID" ColumnName="TransportID" />
+                <ScalarProperty Name="Final" ColumnName="Final" />
+                <ScalarProperty Name="Special" ColumnName="Special" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkDays">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.WorkDays">
+              <MappingFragment StoreEntitySet="WorkDays">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameDayOfWeek" ColumnName="NameDayOfWeek" />
+                <ScalarProperty Name="SightID" ColumnName="SightID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Full">
+            <EntityTypeMapping TypeName="SightOfOneCityModel.View_Full">
+              <MappingFragment StoreEntitySet="View_Full">
+                <ScalarProperty Name="NameSight" ColumnName="NameSight" />
+                <ScalarProperty Name="NameCategory" ColumnName="NameCategory" />
+                <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
+                <ScalarProperty Name="FamilyAuthor" ColumnName="FamilyAuthor" />
+                <ScalarProperty Name="NameAuthor" ColumnName="NameAuthor" />
+                <ScalarProperty Name="PatronymicAuthor" ColumnName="PatronymicAuthor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
