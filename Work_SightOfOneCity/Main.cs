@@ -84,7 +84,78 @@ namespace Work_SightOfOneCity
 
         private void Edit_FormClosed(object sender, FormClosedEventArgs e)
         {
-            InitDVG();
+            try
+            {
+                using (SightOfOneCityEntities context = new SightOfOneCityEntities(connectionString))
+                {
+                    if (choose == 0)
+                    {
+                        InitDVG();
+                    }
+                    if (choose == 1)
+                    {
+                        dataGridView.DataSource = (from author in context.Author
+                                                   select new
+                                                   {
+                                                       Family = author.FamilyAuthor,
+                                                       Name = author.NameAuthor,
+                                                       Patronymic = author.PatronymicAuthor,
+                                                       Gender = author.Gender,
+                                                       YearBirthday = author.DateBirthday
+                                                   }).ToList();
+                        dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                        nameFilter.Visible = false;
+                        authorFilter.Visible = true;
+                        CategoryFilter.Visible = false;
+                        StatusFilter.Visible = false;
+                    }
+
+                    if (choose == 2)
+                    {
+                        dataGridView.DataSource = (from status in context.StatusSight
+                                                   select new { Name = status.NameStatus }).ToList();
+                        dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                        nameFilter.Visible = true;
+                        authorFilter.Visible = false;
+                        CategoryFilter.Visible = false;
+                        StatusFilter.Visible = false;
+                    }
+                    if (choose == 3)
+                    {
+                        dataGridView.DataSource = (from stop in context.TransportStop
+                                                   select new { Name = stop.NameStop }).ToList();
+                        dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                        nameFilter.Visible = true;
+                        authorFilter.Visible = false;
+                        CategoryFilter.Visible = false;
+                        StatusFilter.Visible = false;
+                    }
+                    if (choose == 4)
+                    {
+                        dataGridView.DataSource = (from category in context.Category
+                                                   select new { Name = category.NameCategory }).ToList();
+                        dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                        nameFilter.Visible = true;
+                        authorFilter.Visible = false;
+                        CategoryFilter.Visible = false;
+                        StatusFilter.Visible = false;
+                    }
+                    if (choose == 5)
+                    {
+                        dataGridView.DataSource = (from kindtr in context.KindOfTransport
+                                                   select new { Name = kindtr.NameKind }).ToList();
+                        dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                        nameFilter.Visible = true;
+                        authorFilter.Visible = false;
+                        CategoryFilter.Visible = false;
+                        StatusFilter.Visible = false;
+                    }
+                }
+            }
+            catch (DbUpdateException)
+            {
+                MessageBox.Show(text: "У вас нет прав на это действие.", caption: "Error", buttons: MessageBoxButtons.OK, icon: MessageBoxIcon.Error);
+            }
         }
 
         private void ViewButton_Click(object sender, EventArgs e)
@@ -123,7 +194,6 @@ namespace Work_SightOfOneCity
                                                      select author).FirstOrDefault(), connectionString, true);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 2)
@@ -136,7 +206,6 @@ namespace Work_SightOfOneCity
                                                      select status).FirstOrDefault(), connectionString, true);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 3)
@@ -149,7 +218,6 @@ namespace Work_SightOfOneCity
                                                      select stop).FirstOrDefault(), connectionString, true);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 4)
@@ -162,7 +230,6 @@ namespace Work_SightOfOneCity
                                                      select category).FirstOrDefault(), connectionString, true);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 5)
@@ -175,7 +242,6 @@ namespace Work_SightOfOneCity
                                                      select kind).FirstOrDefault(), connectionString, true);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                 }
@@ -658,7 +724,6 @@ namespace Work_SightOfOneCity
                                                      select author).FirstOrDefault(), connectionString);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 2)
@@ -671,7 +736,6 @@ namespace Work_SightOfOneCity
                                                      select status).FirstOrDefault(), connectionString);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 3)
@@ -684,7 +748,6 @@ namespace Work_SightOfOneCity
                                                      select stop).FirstOrDefault(), connectionString);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 4)
@@ -697,7 +760,6 @@ namespace Work_SightOfOneCity
                                                      select category).FirstOrDefault(), connectionString);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 5)
@@ -710,7 +772,6 @@ namespace Work_SightOfOneCity
                                                      select kind).FirstOrDefault(), connectionString);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                 }
@@ -894,7 +955,6 @@ namespace Work_SightOfOneCity
                                                      select author).FirstOrDefault(), connectionString);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 2)
@@ -907,7 +967,6 @@ namespace Work_SightOfOneCity
                                                      select status).FirstOrDefault(), connectionString);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 3)
@@ -920,7 +979,6 @@ namespace Work_SightOfOneCity
                                                      select stop).FirstOrDefault(), connectionString);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 4)
@@ -933,7 +991,6 @@ namespace Work_SightOfOneCity
                                                      select category).FirstOrDefault(), connectionString);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                     else if (choose == 5)
@@ -946,7 +1003,6 @@ namespace Work_SightOfOneCity
                                                      select kind).FirstOrDefault(), connectionString);
                             table.FormClosed += Edit_FormClosed;
                             table.ShowDialog();
-                            choose = 0;
                         }
                     }
                 }
